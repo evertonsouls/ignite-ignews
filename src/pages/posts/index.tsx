@@ -6,7 +6,6 @@ import { GetStaticProps } from 'next';
 import { getPrismicClient } from '../../services/prismic';
 import styles from './styles.module.scss'
 import { useSession } from 'next-auth/client';
-import { useEffect } from 'react';
 
 type Post = {
   slug: string;
