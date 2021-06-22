@@ -1,13 +1,15 @@
 import React from 'react';
+import Image from 'next/image'
 import { ActiveLink } from '../ActiveLink';
 import { SignInButton } from '../SignInButton'
+import logoImg from '../../../public/images/logo.svg'
 import styles from './styles.module.scss'
 
 export function Header() {  
   return (
     <header className={styles.headerContainer}>
       <div className={styles.headerContent}>
-        <img src="/images/logo.svg" alt="ig.news"/>
+        <Image src={logoImg} alt="ig.news" />
         <nav>
           <ActiveLink href="/" activeClassName={styles.active}>
             <a>Home</a>

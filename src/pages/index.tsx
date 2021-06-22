@@ -1,10 +1,11 @@
 import Head from 'next/head'
-import React from 'react';
-import { GetStaticProps } from 'next';
-import { SubscribeButton } from '../components/SubscribeButton';
-import { stripe } from '../services/stripe';
-
-import styles from '../styles/home.module.scss';
+import Image from 'next/image'
+import React from 'react'
+import { GetStaticProps } from 'next'
+import { SubscribeButton } from '../components/SubscribeButton'
+import { stripe } from '../services/stripe'
+import avatarImg from '../../public/images/avatar.svg'
+import styles from '../styles/home.module.scss'
 
 interface HomeProps {
   product: {
@@ -33,10 +34,10 @@ export default function Home({ product }: HomeProps) {
           <SubscribeButton />
         </section>
 
-        <img src="/images/avatar.svg" alt="Girl coding"/>
+        <Image src={avatarImg} alt="Girl coding" />
       </main>
     </>
-  );
+  )
 }
 
 
@@ -44,7 +45,7 @@ export default function Home({ product }: HomeProps) {
 export const getStaticProps: GetStaticProps = async () => {
   const price = await stripe.prices.retrieve(process.env.STRIPE_PRICE_ID, {
     expand: ['product'],
-  });
+  })
 
   const product = {
     priceId: price.id,

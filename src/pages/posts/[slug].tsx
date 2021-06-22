@@ -1,12 +1,12 @@
-import Head from "next/head";
+import Head from "next/head"
 import { GetServerSideProps } from "next"
 import { getSession, useSession } from "next-auth/client"
-import { RichText } from "prismic-dom";
-import { getPrismicClient } from "../../services/prismic";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { RichText } from "prismic-dom"
+import { getPrismicClient } from "../../services/prismic"
+import { useRouter } from "next/router"
+import { useEffect } from "react"
 
-import styles from './post.module.scss';
+import styles from './post.module.scss'
 
 interface PostProps {
   post: {
@@ -18,14 +18,14 @@ interface PostProps {
 }
 
 export default function Post({ post }: PostProps) {
-  const [session] = useSession();
-  const router = useRouter();
+  const [session] = useSession()
+  const router = useRouter()
 
   useEffect(() => {
     if (!session?.activeSubscription){
-      router.push(`/posts/preview/${post.slug}`);
+      router.push(`/posts/preview/${post.slug}`)
     }
-  }, [session]);
+  }, [session, router, post.slug])
 
   return (
     <>
@@ -49,7 +49,7 @@ export default function Post({ post }: PostProps) {
 }
 
 export const getServerSideProps: GetServerSideProps  = async ({ req, params }) => {
-  const session = await getSession({ req });
+  const session = await getSession({ req })
 
   if (!session?.activeSubscription) {
     return {
@@ -60,11 +60,11 @@ export const getServerSideProps: GetServerSideProps  = async ({ req, params }) =
     }
   }
 
-  const { slug } = params;
+  const { slug } = params
 
-  const prismic = getPrismicClient(req);
+  const prismic = getPrismicClient(req)
 
-  const response = await prismic.getByUID('post', String(slug), { });
+  const response = await prismic.getByUID('post', String(slug), { })
 
   const post = {
     slug,
@@ -75,7 +75,7 @@ export const getServerSideProps: GetServerSideProps  = async ({ req, params }) =
       month: 'long',
       year: 'numeric',
     }),
-  };
+  }
 
   return {
     props: {

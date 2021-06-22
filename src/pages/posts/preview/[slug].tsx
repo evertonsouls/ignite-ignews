@@ -1,13 +1,13 @@
-import Head from "next/head";
-import Link from "next/link";
+import Head from "next/head"
+import Link from "next/link"
 import { GetStaticPaths, GetStaticProps } from "next"
-import { RichText } from "prismic-dom";
-import { getPrismicClient } from "../../../services/prismic";
+import { RichText } from "prismic-dom"
+import { getPrismicClient } from "../../../services/prismic"
 
-import styles from '../post.module.scss';
-import { useSession } from "next-auth/client";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import styles from '../post.module.scss'
+import { useSession } from "next-auth/client"
+import { useRouter } from "next/router"
+import { useEffect } from "react"
 
 interface PostPreviewProps {
   post: {
@@ -19,14 +19,14 @@ interface PostPreviewProps {
 }
 
 export default function PostPreview({ post }: PostPreviewProps) {
-  const [session] = useSession();
-  const router = useRouter();
+  const [session] = useSession()
+  const router = useRouter()
 
   useEffect(() => {
     if (session?.activeSubscription){
-      router.push(`/posts/${post.slug}`);
+      router.push(`/posts/${post.slug}`)
     }
-  }, [session]);
+  }, [session, router, post.slug])
 
   return (
     <>
@@ -65,11 +65,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps  = async ({ params }) => {
   
-  const { slug } = params;
+  const { slug } = params
 
-  const prismic = getPrismicClient();
+  const prismic = getPrismicClient()
 
-  const response = await prismic.getByUID('post', String(slug), { });
+  const response = await prismic.getByUID('post', String(slug), { })
 
   const post = {
     slug,
@@ -80,7 +80,7 @@ export const getStaticProps: GetStaticProps  = async ({ params }) => {
       month: 'long',
       year: 'numeric',
     }),
-  };
+  }
 
   return {
     props: {
